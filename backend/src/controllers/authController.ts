@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { compare, hash } from "bcrypt";
 import User from "../models/User.model";
 import ResponseController from "./ResponseController";
+import DbOperation from "../db/utils";
 import { CookieHandler } from "../utils/cookies";
 
 /**
@@ -18,6 +19,14 @@ class UserAuthController {
   public static Register = async (req: Request, res: Response) => {
     try {
       const { firstname, lastname, mobile, email, password } = req.body;
+      const existingUser = await DbOperation.getUsersByEmail(email)
+      if (existingUser) {
+        return ResponseController.HandleResponseError(res, {
+          status: 409,
+          message: "User already exists!",
+          errors: [],
+        });
+      }
       const hashedPassword = await hash(password, 10);
       const newUser = new User({
         firstname,
