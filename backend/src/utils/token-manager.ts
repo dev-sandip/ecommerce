@@ -32,6 +32,8 @@ export const verifyToken = async (
     next: NextFunction
 ) => {
     const token = req.signedCookies[process.env.AUTH_TOKEN_ID];
+    console.log(token);
+
     if (!token || token.trim() === "") {
         const response: ErrorResponseType = {
             status: 401,
