@@ -18,7 +18,7 @@ export class CookieHandler {
         const token = createToken(userId, "7d");
         const expires = new Date();
         expires.setDate(expires.getDate() + 7);
-        res.cookie("auth_token", token, {
+        res.cookie(process.env.AUTH_TOKEN_ID, token, {
             path: "/",
             domain: process.env.FRONTEND_DOMAIN,
             expires: expires,
@@ -34,7 +34,7 @@ export class CookieHandler {
      * @param res - The response object.
      */
     public static clearCookies(res: Response) {
-        res.clearCookie("auth_token", {
+        res.clearCookie(process.env.AUTH_TOKEN_ID, {
             httpOnly: true,
             domain: process.env.FRONTEND_DOMAIN,
             signed: true,

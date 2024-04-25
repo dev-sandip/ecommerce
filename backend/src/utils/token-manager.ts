@@ -32,9 +32,10 @@ export const verifyToken = async (
     next: NextFunction
 ) => {
     const token = req.signedCookies[process.env.AUTH_TOKEN_ID];
-    console.log(token);
-
-    if (!token || token.trim() === "") {
+    //here auth token id is the name of the cookie
+    console.log("🚀 ~ req.signedCookies:", req.signedCookies);
+    console.log("🚀 ~ token:", token)
+    if (!token || token.trim() === " ") {
         const response: ErrorResponseType = {
             status: 401,
             message: "Auth Error, Cookies not found",
