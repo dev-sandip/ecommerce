@@ -35,8 +35,11 @@ class UserAuthController {
         email,
         password: hashedPassword,
       });
-      console.log(newUser);
+
       await newUser.save();
+      const userWithoutPassword = newUser.toObject();
+      delete userWithoutPassword.password;
+      console.log(userWithoutPassword);
 
       // Register cookies
       CookieHandler.registerCookies(res, newUser._id.toString());
@@ -44,7 +47,7 @@ class UserAuthController {
       return ResponseController.HandleSuccessResponse(res, {
         status: 201,
         message: "Account created successfully!",
-        data: newUser,
+        data: userWithoutPassword,
       });
     } catch (error) {
       return ResponseController.Handle500Error(res, error);
