@@ -41,8 +41,6 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-
-
   isAdmin: {
     type: Boolean,
     default: false,
@@ -52,7 +50,21 @@ const UserSchema = new mongoose.Schema({
     min: 8,
     max: 20,
   },
+  cart: {
+    type: Array,
+    default: []
+  },
+  address: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Address"
 
+  }],
+  wishlist: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Product"
+  }]
+}, {
+  timestamps: true,
 });
 
 export default mongoose.model("User", UserSchema);
