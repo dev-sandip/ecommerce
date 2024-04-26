@@ -4,6 +4,7 @@ import User from "../models/User.model";
 import ResponseController from "./ResponseController";
 import DbOperation from "../db/utils";
 import { CookieHandler } from "../utils/cookies";
+import Utils from "../utils/utils";
 
 /**
  * Controller class for user authentication related operations.
@@ -37,10 +38,7 @@ class UserAuthController {
       });
 
       await newUser.save();
-      const userWithoutPassword = newUser.toObject();
-      delete userWithoutPassword.password;
-      console.log(userWithoutPassword);
-
+      const userWithoutPassword = Utils.userWithoutPassword(newUser);
       // Register cookies
       CookieHandler.registerCookies(res, newUser._id.toString());
 
@@ -90,11 +88,11 @@ class UserAuthController {
       CookieHandler.registerCookies(res, userAuth._id.toString());
       //return user data
       const user = await User.findById(userAuth._id);
-      const { password: hashedPassword, ...rest } = user.toObject();
+      const userWithoutPassword = Utils.userWithoutPassword(user);
       return ResponseController.HandleSuccessResponse(res, {
         status: 200,
         message: "Login successful!",
-        data: rest,
+        data: userWithoutPassword,
       });
     } catch (error) {
       return ResponseController.Handle500Error(res, error);
@@ -106,6 +104,7 @@ class UserAuthController {
       // Check if user exists
       // res.locals.jwtData.id is the user id from the jwt token returned by the auth middleware called verifyToken
       const user = await User.findById(res.locals.jwtData.id);
+      const userWithoutPassword = Utils.userWithoutPassword(user);
       if (!user) {
         return ResponseController.HandleResponseError(res, {
           status: 404,
@@ -117,7 +116,7 @@ class UserAuthController {
       return ResponseController.HandleSuccessResponse(res, {
         status: 200,
         message: "User verified!",
-        data: user,
+        data: userWithoutPassword,
       });
     } catch (error) {
       return ResponseController.Handle500Error(res, error);
