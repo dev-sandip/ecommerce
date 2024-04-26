@@ -8,6 +8,7 @@ authRouter.post(
     UserAuthController.Register
 );
 authRouter.post("/login", UserAuthController.Login);
+authRouter.get("/logout", UserAuthController.logout);
 
 
 export default authRouter;

@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from 'express';
-import { verifyToken } from '../utils/token-manager';
 import { ErrorResponseType } from '../types/response';
 import jwt from "jsonwebtoken";
 import ResponseController from '../controllers/ResponseController';
