@@ -24,8 +24,8 @@ const ProductSchema = new mongoose.Schema(
       required: true,
     },
     category: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Category",
+      type: String,
+      required: true,
       min: 10,
     },
     quantity: {
@@ -36,44 +36,10 @@ const ProductSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
-    color: {
-      type: String,
-      enum: [
-        "red",
-        "blue",
-        "green",
-        "yellow",
-        "black",
-        "white",
-        "purple",
-        "pink",
-        "orange",
-        "brown",
-        "grey",
-        "silver",
-        "gold",
-        "other",
-      ],
-    },
+    color: [],
     brands: {
       type: String,
-      enum: [
-        "Apple",
-        "Samsung",
-        "Microsoft",
-        "Lenovo",
-        "Asus",
-        "HP",
-        "Dell",
-        "Acer",
-        "Toshiba",
-        "Sony",
-        "Canon",
-        "Nikon",
-        "Fujifilm",
-        "Olympus",
-        "Other",
-      ],
+      required: true,
     },
     sold: {
       type: Number,
@@ -94,4 +60,5 @@ const ProductSchema = new mongoose.Schema(
   }
 );
 
+//TODO:Remove enum from color and brands at last
 export default mongoose.model("Product", ProductSchema);
