@@ -26,11 +26,12 @@ const ProductSchema = new mongoose.Schema(
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
-      required: true,
       min: 10,
-      unique: true,
     },
-    quantity: Number,
+    quantity: {
+      type: Number,
+      required: true,
+    },
     images: {
       type: Array,
       default: [],
@@ -58,7 +59,7 @@ const ProductSchema = new mongoose.Schema(
       type: String,
       enum: [
         "Apple",
-        "Samsung,",
+        "Samsung",
         "Microsoft",
         "Lenovo",
         "Asus",
