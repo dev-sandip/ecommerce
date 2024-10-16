@@ -1,6 +1,7 @@
 import configureOpenAPI from "@/libs/configure-open-api";
 import createApp from "@/libs/create-app";
 import auth from "@/routes/auth/auth.index";
+import product from "@/routes/products/product.index";
 
 import { connectToDb } from "./db/index.db";
 
@@ -11,6 +12,7 @@ connectToDb();
 
 const routes = [
   auth,
+  product,
 ] as const;
 
 routes.forEach((route) => {

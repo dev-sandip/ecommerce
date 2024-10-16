@@ -1,5 +1,4 @@
 import { createRouter } from "@/libs/create-app";
-import { protect } from "@/middlewares/auth-middleware";
 
 import * as handlers from "./auth.handler";
 import * as routes from "./auth.route";

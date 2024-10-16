@@ -4,7 +4,7 @@ import * as HttpStatusCodes from "stoker/http-status-codes";
 import { jsonContent, jsonContentRequired } from "stoker/openapi/helpers";
 import { createErrorSchema } from "stoker/openapi/schemas";
 
-import { protect, protectAndIsAdmin } from "@/middlewares/auth-middleware";
+import { protectAndIsAdmin } from "@/middlewares/auth-middleware";
 
 const tags = ["auth"];
 export const registerRoute = createRoute({
