@@ -14,7 +14,7 @@ const UserSchema: Schema = new Schema<UserInput>({
   fname: { type: String, required: true, minlength: 3 },
   lname: { type: String, required: true, minlength: 3 },
   email: { type: String, required: true, unique: true },
-  password: { type: String, required: true, minlength: 6 },
+  password: { type: String, required: true, minlength: 6, select: false },
   isAdmin: { type: Boolean, default: false },
 });
 

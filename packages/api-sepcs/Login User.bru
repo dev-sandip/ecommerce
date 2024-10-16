@@ -1,19 +1,17 @@
 meta {
-  name: Register User
+  name: Login User
   type: http
-  seq: 2
+  seq: 3
 }
 
 post {
-  url: http://localhost:3000/auth/register
+  url: http://localhost:3000/auth/login
   body: json
   auth: none
 }
 
 body:json {
   {
-    "fname": "Sandip",
-    "lname": "Sapkota",
     "email": "sandipsapkota@duck.com",
     "password": "12345678"
   }
