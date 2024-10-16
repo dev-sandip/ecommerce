@@ -1,20 +1,22 @@
 import configureOpenAPI from "@/libs/configure-open-api";
 import createApp from "@/libs/create-app";
+import auth from "@/routes/auth/auth.index";
 
+import { connectToDb } from "./db/index.db";
 
 const app = createApp();
 
 configureOpenAPI(app);
+connectToDb();
 
-// const routes = [
-//     index,
-//     tasks,
-// ] as const;
+const routes = [
+  auth,
+] as const;
 
-// routes.forEach((route) => {
-//     app.route("/", route);
-// });
+routes.forEach((route) => {
+  app.route("/", route);
+});
 
-// export type AppType = typeof routes[number];
+export type AppType = typeof routes[number];
 
 export default app;
