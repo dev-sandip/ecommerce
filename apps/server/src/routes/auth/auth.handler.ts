@@ -1,10 +1,13 @@
-import { LoginSchema, RegisterSchema } from "@shared/zod"; // Assuming the Zod schema is exported here
+import { LoginSchema, RegisterSchema } from "@shared/zod";
 import { compare, hash } from "bcrypt";
+import { setCookie, setSignedCookie } from "hono/cookie";
 import * as HttpStatusCodes from "stoker/http-status-codes";
 import { z } from "zod";
 
 import type { AppRouteHandler } from "@/libs/types";
 
+import { AUTH_COOKIE_NAME } from "@/constants";
+import genToken from "@/libs/gen-token";
 import userModel from "@/models/user.model";
 
 import type { loginRoute, registerRoute } from "./auth.route";
@@ -86,7 +89,14 @@ export const login: AppRouteHandler<typeof loginRoute> = async (c: any) => {
         HttpStatusCodes.UNAUTHORIZED,
       );
     }
-
+    const token = await genToken(user._id as string);
+    setCookie(c, AUTH_COOKIE_NAME, token, {
+      path: "/",
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+      maxAge: 60 * 60 * 24 * 30,
+    });
     return c.json(
       {
         message: `Welcome back, ${user.fname}`,
