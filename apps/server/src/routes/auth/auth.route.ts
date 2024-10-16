@@ -4,6 +4,8 @@ import * as HttpStatusCodes from "stoker/http-status-codes";
 import { jsonContent, jsonContentRequired } from "stoker/openapi/helpers";
 import { createErrorSchema } from "stoker/openapi/schemas";
 
+import { protect, protectAndIsAdmin } from "@/middlewares/auth-middleware";
+
 const tags = ["auth"];
 export const registerRoute = createRoute({
   method: "post",
@@ -40,5 +42,16 @@ export const loginRoute = createRoute({
       createErrorSchema(LoginSchema),
       "The validation error(s)",
     ),
+  },
+});
+export const middlewarecheck = createRoute({
+  method: "get",
+  path: "/auth/middlewarecheck",
+  middleware: [protectAndIsAdmin],
+  tags,
+  responses: {
+    [HttpStatusCodes.OK]: {
+      description: "Middleware check",
+    },
   },
 });

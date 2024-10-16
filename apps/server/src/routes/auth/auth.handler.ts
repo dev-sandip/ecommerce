@@ -1,6 +1,6 @@
 import { LoginSchema, RegisterSchema } from "@shared/zod";
 import { compare, hash } from "bcrypt";
-import { setCookie, setSignedCookie } from "hono/cookie";
+import { setCookie } from "hono/cookie";
 import * as HttpStatusCodes from "stoker/http-status-codes";
 import { z } from "zod";
 
@@ -123,4 +123,14 @@ export const login: AppRouteHandler<typeof loginRoute> = async (c: any) => {
       HttpStatusCodes.INTERNAL_SERVER_ERROR,
     );
   }
+};
+
+type MiddlewareCheckHandler = AppRouteHandler<any>;
+export const middlewarecheck: MiddlewareCheckHandler = async (c: any) => {
+  return c.json(
+    {
+      message: "Middleware check",
+    },
+    HttpStatusCodes.OK,
+  );
 };
