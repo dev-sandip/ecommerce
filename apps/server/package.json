@@ -3,9 +3,12 @@
   "version": "0.1.0",
   "scripts": {
     "dev": "tsx watch src/index.ts",
+    "vercel:dev": "pnpm run build && vercel dev",
+    "start": "node ./dist/src/index.js",
+    "typechecks": "tsc --noEmit",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "build": "tsx build src/index.ts"
+    "lint:fix": "pnpm run lint --fix",
+    "build": "tsc && tsc-alias"
   },
   "dependencies": {
     "@hono/node-server": "^1.13.2",
@@ -24,6 +27,7 @@
     "pino": "^9.5.0",
     "pino-pretty": "^11.3.0",
     "stoker": "^1.2.4",
+    "tsc-alias": "^1.8.10",
     "zod": "^3.23.8"
   },
   "devDependencies": {
