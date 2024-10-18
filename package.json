@@ -2,7 +2,7 @@
   "name": "ecommerce",
   "private": true,
   "scripts": {
-    "build": "turbo build",
+    "build": "turbo build && tsc && tsc-alias",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
