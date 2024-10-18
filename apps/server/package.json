@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "build": "tsx build src/index.ts"
   },
   "dependencies": {
     "@hono/node-server": "^1.13.2",

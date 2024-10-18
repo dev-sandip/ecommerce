@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "composite": true,
     "target": "ESNext",
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
@@ -12,6 +13,8 @@
       "node"
     ],
     "strict": true,
+    "declaration": true,
+    "outDir": "./dist",
     "skipLibCheck": true
   }
 }

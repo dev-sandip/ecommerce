@@ -7,4 +7,5 @@ const router = createRouter()
   .openapi(routes.registerRoute, handlers.register)
   .openapi(routes.loginRoute, handlers.login)
   .openapi(routes.middlewarecheck, handlers.middlewarecheck);
+
 export default router;

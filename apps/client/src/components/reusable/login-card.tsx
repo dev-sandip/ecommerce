@@ -9,9 +9,31 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+// import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+// import { LoginSchema } from "@shared/zod";
+// import { zodResolver } from '@hookform/resolvers/zod'
+// import { useForm } from "react-hook-form";
+// import { useLogin } from "@/api/auth";
+// import { z } from 'zod'
 export const description =
     "A simple login form with email and password. The submit button says 'Sign in'."
+// type LoginType = z.infer<typeof LoginSchema>
 export function LoginCard() {
+    // const form = useForm<LoginType>({
+    //     resolver: zodResolver(LoginSchema),
+    //     defaultValues: {
+    //         email: "",
+    //         password: ""
+    //     },
+    // })
+    // const { mutate } = useLogin()
+
+    // const onSubmit = (values: LoginType) => {
+    //     mutate({
+    //         body: values,
+    //         param: undefined
+    //     })
+    // }
     return (
         <Card className="w-full max-w-sm">
             <CardHeader>
