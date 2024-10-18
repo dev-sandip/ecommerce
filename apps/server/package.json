@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "vercel:dev": "pnpm run build && vercel dev",
     "start": "node ./dist/src/index.js",
     "typechecks": "tsc --noEmit",
     "lint": "eslint .",
