@@ -1,0 +1,32 @@
+{
+  "name": "server",
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "start": "node ./dist/src/index.js",
+    "typechecks": "tsc --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "pnpm run lint --fix",
+    "build": "tsc && tsc-alias"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.2",
+    "@hono/zod-validator": "^0.4.1",
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.5",
+    "dotenv-expand": "^11.0.6",
+    "hono": "^4.6.4",
+    "mongoose": "^8.7.1",
+    "pino": "^9.5.0",
+    "tsc-alias": "^1.8.10",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^3.7.3",
+    "@types/bcrypt": "^5.0.2",
+    "@types/node": "^20.11.17",
+    "eslint": "^9.11.1",
+    "eslint-plugin-format": "^0.1.2",
+    "tsx": "^4.7.1"
+  }
+}
