@@ -3,6 +3,8 @@ import { Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { QueryProvider } from "@/providers/query-provider";
+import { Toaster } from "sonner";
+
 const font = Bricolage_Grotesque({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -42,6 +44,7 @@ export default function RootLayout({
         className={cn(font.className, "antialiased min-h-screen")}
       >
         <QueryProvider>
+          <Toaster richColors position="top-right" />
           {children}
         </QueryProvider>
       </body>

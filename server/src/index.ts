@@ -9,50 +9,44 @@ import env from "./env";
 import { errorHandler, notFound } from "./middlewares/error-middleware";
 import userAuth from "./routes/user-routes";
 
-// import { errorHandler, notFound } from "./middlewares";
-// import { Users } from "./routes";
-
-// Initialize the Hono app
+// Initialize the Hono app with base path
 const app = new Hono().basePath("/api/v1");
 
-// Config MongoDB
+// Destructure environment variables
+
+// Connect MongoDB
 connectDB();
 
-// Initialize middlewares
-app.use("*", logger(), prettyJSON());
-
-// Cors
+// Apply CORS globally before other middlewares
 app.use(
   "*",
   cors({
-    origin: "*",
+    origin: [env.FRONTEND_URL],
     allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true,
+    allowHeaders: ["Content-Type", "Authorization", "X-Custom-Header"],
   }),
 );
+
+// Global middlewares: logging and pretty JSON responses
+app.use("*", logger(), prettyJSON());
 
 // Home Route
 app.get("/", c => c.text("Welcome to the API!"));
 
+// Authentication routes
 app.route("/auth", userAuth);
 
-// Error Handler
-app.onError((_err, c) => {
-  const error = errorHandler(c);
-  return error;
-});
+// Error handling middleware
+app.onError((_err, c) => errorHandler(c));
 
-// Not Found Handler
-app.notFound((c) => {
-  const error = notFound(c);
-  return error;
-});
+// Handle 404 Not Found
+app.notFound(c => notFound(c));
 
-const port = env.PORT || 8000;
-
+// Start the server
 // eslint-disable-next-line no-console
-console.log(`Server is running on port http://localhost:${port}`);
-
+console.log(`Server is running on http://localhost:${env.PORT}`);
 serve({
   fetch: app.fetch,
-  port,
+  port: env.PORT,
 });
