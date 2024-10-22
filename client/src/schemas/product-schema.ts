@@ -81,8 +81,8 @@ export const ProductSchema = z.object({
   }),
   brand: z.string(),
   category: z.string(),
-  thumbnail: FileSchema.optional(),
-  images: z.array(FileSchema).optional(),
+  thumbnail: FileSchema,
+  images: z.array(FileSchema),
 });
 export type File = z.infer<typeof FileSchema>;
 export type Product = z.infer<typeof ProductSchema>;
