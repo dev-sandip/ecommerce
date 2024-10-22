@@ -34,7 +34,7 @@ app.get("/", c => c.text("Welcome to the API!"));
 // Authentication routes
 app.route("/auth", userAuth);
 // Product routes
-app.route("/product", productAuth);
+app.route("/products", productAuth);
 
 // Error handling middleware
 app.onError((_err, c) => errorHandler(c));

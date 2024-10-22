@@ -7,29 +7,12 @@ import { uploadArrayOfImages, uploadFile } from "@/libs/file-upload";
 import productModel from "@/models/product.model";
 import { ProductSchema } from "@/schema/product";
 
-// Function to parse and validate product data
-function parseProductData(body: any) {
-  return ProductSchema.parse({
-    title: body.title,
-    description: body.description,
-    price: Number.parseFloat(body.price as string),
-    discountPercentage: Number.parseFloat(body.discountPercentage as string),
-    rating: Number.parseFloat(body.rating as string),
-    stock: Number.parseInt(body.stock as string, 10),
-    brand: body.brand,
-    category: body.category,
-  });
-}
-
-// Main function to create a product
 export async function createProduct(c: Context) {
   try {
     const body = await c.req.parseBody();
+    const productData = ProductSchema.parse(body); // Parse the basic product data first
 
-    // Parse and validate the product data
-    const productData = parseProductData(body);
-
-    // Handle thumbnail upload if present
+    // Handle thumbnail upload
     if (body.thumbnail && body.thumbnail instanceof File) {
       const thumbnail = await uploadFile(body.thumbnail, "product-thumbnail");
       if (thumbnail) {
@@ -42,7 +25,7 @@ export async function createProduct(c: Context) {
       }
     }
 
-    // Handle images upload if present
+    // Handle images upload
     if (body["images[]"] && Array.isArray(body["images[]"])) {
       productData.images = await uploadArrayOfImages(body["images[]"], "product-images");
     }
@@ -56,23 +39,51 @@ export async function createProduct(c: Context) {
     }, STATUS_CODE.CREATED);
   }
   catch (error) {
-    // Handle validation errors
     if (error instanceof z.ZodError) {
-      return c.json(
-        {
-          message: "Validation error",
-          errors: error.errors,
-        },
-        STATUS_CODE.BAD_REQUEST,
-      );
+      return c.json({
+        message: "Validation error",
+        errors: error.errors,
+      }, STATUS_CODE.BAD_REQUEST);
     }
 
-    // Handle other errors
-    return c.json(
-      {
-        message: "Internal server error",
-      },
-      STATUS_CODE.INTERNAL_SERVER_ERROR,
-    );
+    return c.json({
+      message: "Internal server error",
+    }, STATUS_CODE.INTERNAL_SERVER_ERROR);
+  }
+}
+
+export async function getProducts(c: Context) {
+  try {
+    const products = await productModel.find();
+    return c.json({
+      products,
+    });
+  }
+  catch (error) {
+    return c.json({
+      error,
+      message: "Internal server error",
+    }, STATUS_CODE.INTERNAL_SERVER_ERROR);
+  }
+}
+export async function getProductById(c: Context) {
+  try {
+    const id = c.req.param("id");
+    const product = await productModel.findById(id);
+    if (!product) {
+      return c.json({
+        message: "Product not found",
+      }, STATUS_CODE.NOT_FOUND);
+    }
+    return c.json({
+      message: "Product fetched successfully",
+      product,
+    }, STATUS_CODE.OK);
+  }
+  catch (error) {
+    return c.json({
+      error,
+      message: "Internal server error",
+    }, STATUS_CODE.INTERNAL_SERVER_ERROR);
   }
 }

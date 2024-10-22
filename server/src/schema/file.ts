@@ -10,8 +10,8 @@ import { z } from "zod";
  * - `thumbnailUrl`: An optional string representing the URL of the file's thumbnail, which must be a valid URL if provided.
  */
 export const FileSchema = z.object({
-  fileId: z.string(),
-  name: z.string(),
-  url: z.string().url(),
+  fileId: z.string().optional(),
+  name: z.string().optional(),
+  url: z.string().url().optional(),
   thumbnailUrl: z.string().url().optional(),
 });
