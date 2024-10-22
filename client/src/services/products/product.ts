@@ -1,20 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "../axios/axios";
 import { API_URL } from "../index";
-import type { Product } from '@/schemas/product-schema';
 
-type ProductsResponse = {
-  products: Product[];
-};
 
 export const useGetProducts = () => {
   return useQuery({
     queryKey: ['products'],
     queryFn: () => {
-      return new Promise<ProductsResponse>((resolve, reject) => {
-        axios.get<ProductsResponse>(API_URL.PRODUCTS)
+      return new Promise((resolve, reject) => {
+        axios.get(API_URL.PRODUCTS)
           .then((response) => {
-            resolve(response.data);
+            resolve(response.data.products);
           })
           .catch((error) => {
             console.error("Failed to fetch products:", error);

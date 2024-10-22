@@ -24,7 +24,7 @@ export default function ProductPage() {
   if (!product) {
     return (
       <div className="container mx-auto px-4 py-8 text-center">
-        <h1 className="text-2xl font-bold">Product not found</h1>
+        <h1 className="text-2xl font-bold">Product not found 😭!</h1>
         <p className="text-gray-600 mt-2">
           The product you&apos;re looking for doesn&apos;t exist or has been removed.
         </p>
