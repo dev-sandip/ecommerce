@@ -18,6 +18,9 @@ const EnvSchema = z.object({
   DATABASE_AUTH_TOKEN: z.string().optional(),
   JWT_SECRET: z.string(),
   FRONTEND_URL: z.string().url(),
+  IMAGE_KIT_PUBLIC_KEY: z.string().optional(),
+  IMAGE_KIT_PRIVATE_KEY: z.string().optional(),
+  IMAGE_KIT_ENDPOINT: z.string().url().optional(),
 }).superRefine((input, ctx) => {
   if (input.NODE_ENV === "production" && !input.DATABASE_AUTH_TOKEN) {
     ctx.addIssue({

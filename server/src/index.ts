@@ -7,17 +7,15 @@ import { prettyJSON } from "hono/pretty-json";
 import connectDB from "./config/db";
 import env from "./env";
 import { errorHandler, notFound } from "./middlewares/error-middleware";
-import userAuth from "./routes/user-routes";
+import productAuth from "./routes/product.routes";
+import userAuth from "./routes/user.routes";
 
 // Initialize the Hono app with base path
 const app = new Hono().basePath("/api/v1");
 
-// Destructure environment variables
-
 // Connect MongoDB
 connectDB();
 
-// Apply CORS globally before other middlewares
 app.use(
   "*",
   cors({
@@ -28,7 +26,6 @@ app.use(
   }),
 );
 
-// Global middlewares: logging and pretty JSON responses
 app.use("*", logger(), prettyJSON());
 
 // Home Route
@@ -36,6 +33,8 @@ app.get("/", c => c.text("Welcome to the API!"));
 
 // Authentication routes
 app.route("/auth", userAuth);
+// Product routes
+app.route("/product", productAuth);
 
 // Error handling middleware
 app.onError((_err, c) => errorHandler(c));

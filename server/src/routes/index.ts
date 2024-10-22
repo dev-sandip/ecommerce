@@ -1,1 +1,1 @@
-export * as userAuth from "./user-routes";
+export * as userAuth from "./user.routes";
