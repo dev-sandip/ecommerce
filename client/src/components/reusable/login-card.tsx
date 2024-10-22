@@ -14,8 +14,8 @@ import { LoginSchema } from "@/schemas/auth-schema"
 import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from "zod"
-import { useLogin } from "@/services/auth"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { useLogin } from "@/services/auth/auth"
 
 export const description =
     "A simple login form with email and password. The submit button says 'Sign in'."

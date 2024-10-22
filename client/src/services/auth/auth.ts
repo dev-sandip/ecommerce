@@ -2,8 +2,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { LoginSchema, RegisterSchema } from "@/schemas/auth-schema"
 
-import axios from "./axios/axios";
-import { API_URL } from ".";
+import axios from "../axios/axios";
+import { API_URL } from "../index";
 
 export const useLogin = () => {
     const queryClient = useQueryClient();

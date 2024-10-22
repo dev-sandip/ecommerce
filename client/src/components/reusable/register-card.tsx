@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
-import { useRegister } from "@/services/auth"
+import { useRegister } from "@/services/auth/auth"
 import { Form, FormField, FormItem, FormControl, FormMessage } from "@/components/ui/form"
 import { RegisterSchema } from "@/schemas/auth-schema"
 
