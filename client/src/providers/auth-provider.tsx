@@ -27,7 +27,7 @@ const AuthProvider = ({ children }: Props) => {
 
   const isAdmin = useCustomStore((state) => state.isAdmin);
   if (isLoading) {
-    return <LoadingSpinner className="h-screen w-screen" />;
+    return <LoadingSpinner text="Authenticating Please Wait!" size="lg" className="h-screen w-screen" />;
   }
   if (isAdmin) {
     return <>{children}</>;

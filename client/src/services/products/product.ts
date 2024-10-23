@@ -1,11 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "../axios/axios";
 import { API_URL } from "../index";
+import { ProductType } from "@/schemas/product-schema";
+import { toast } from "sonner";
 
 
 export const useGetProducts = () => {
   return useQuery({
-    queryKey: ['products'],
+    queryKey: ['fetched-products'],
     queryFn: () => {
       return new Promise((resolve, reject) => {
         axios.get(API_URL.PRODUCTS)
@@ -35,5 +37,28 @@ export const useGetSingleProduct = (id: string) => {
           });
       });
     },
+  });
+}
+
+export const useCreateProduct = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data: ProductType): Promise<string> => {
+      return new Promise((resolve, reject) => {
+        axios.post(API_URL.CREATE_PRODUCT, data)
+          .then((res) => {
+            queryClient.invalidateQueries({
+              queryKey: ['products']
+            });
+            resolve(res.data.message ?? "Product created successfully");
+          })
+          .catch((error) => {
+            console.log(error)
+            reject(error?.response?.data?.message ?? "Failed to create product, try again!");
+          });
+      });
+    },
+    onError: (message: string) => toast.error(message),
+    onSuccess: (message) => toast.success(message),
   });
 }

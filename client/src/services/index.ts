@@ -13,4 +13,5 @@ export const API_URL = {
     REGISTER: "/auth/register",
     PRODUCTS: "/products",
     USER_SESSION: "/auth/me",
+    CREATE_PRODUCT: "/products/create",
 };
