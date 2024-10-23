@@ -1,7 +1,8 @@
 import { Hono } from "hono";
 
+import { protect } from "@/middlewares/auth-middleware";
+
 import { auth } from "../controllers";
-// import { isAdmin, protect } from "../middlewares";
 
 const users = new Hono();
 
@@ -10,5 +11,8 @@ users.post("/register", c => auth.register(c));
 
 // Login User
 users.post("/login", c => auth.loginUser(c));
-
+// logout user
+users.get("/logout", c => auth.logoutUser(c));
+// Get User Profile
+users.get("/me", protect, c => auth.me(c));
 export default users;

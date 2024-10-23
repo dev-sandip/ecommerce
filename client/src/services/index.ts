@@ -12,4 +12,5 @@ export const API_URL = {
     LOGIN: "/auth/login",
     REGISTER: "/auth/register",
     PRODUCTS: "/products",
+    USER_SESSION: "/auth/me",
 };

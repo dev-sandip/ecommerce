@@ -1,10 +1,12 @@
 import type { Context } from "hono";
 
 import { compare, hash } from "bcrypt";
-import { setCookie } from "hono/cookie";
+import { getCookie, setCookie } from "hono/cookie";
+import { Jwt } from "hono/utils/jwt";
 import { z } from "zod";
 
 import { COOKIE, STATUS_CODE } from "@/constants";
+import env from "@/env";
 import genToken from "@/libs/generate-token";
 import userModel from "@/models/user.model";
 import { LoginSchema, RegisterSchema } from "@/schema/auth";
@@ -38,10 +40,11 @@ export async function register(c: Context) {
     });
 
     await newUser.save();
+    const { password, ...userwithoutPassword } = newUser.toJSON();
     return c.json(
       {
         message: "User registered successfully",
-        user: newUser,
+        user: userwithoutPassword,
       },
       STATUS_CODE.CREATED,
     );
@@ -101,8 +104,10 @@ export async function loginUser(c: Context) {
       sameSite: "strict",
       maxAge: 60 * 60 * 24 * 30,
     });
+    const { password, ...userwithoutPassword } = user.toJSON();
     return c.json(
       {
+        user: userwithoutPassword,
         message: `Welcome back, ${user.fname}`,
       },
       STATUS_CODE.OK,
@@ -128,3 +133,47 @@ export async function loginUser(c: Context) {
     );
   }
 };
+export async function logoutUser(c: Context) {
+  try {
+    setCookie(c, COOKIE.AUTH, "", {
+      path: "/",
+      maxAge: -1,
+    });
+    return c.json(
+      {
+        message: "Logged out successfully",
+      },
+      STATUS_CODE.OK,
+    );
+  }
+  catch (error: unknown) {
+    return c.json(
+      {
+        message: "Something went wrong",
+        error: error instanceof Error ? error.message : "Unknown error",
+      },
+      STATUS_CODE.INTERNAL_SERVER_ERROR,
+    );
+  }
+}
+export async function me(c: Context) {
+  const token = getCookie(c, COOKIE.AUTH);
+  if (!token) {
+    return c.json({ message: "Please login to access this resource" }, STATUS_CODE.UNAUTHORIZED);
+  }
+
+  try {
+    const { id } = await Jwt.verify(token, env.JWT_SECRET || "");
+    const user = await userModel.findById(id).select("-password");
+
+    if (!user) {
+      return c.json({ message: "User not found" }, STATUS_CODE.NOT_FOUND);
+    }
+
+    return c.json({ user }, STATUS_CODE.OK);
+  }
+  catch (err) {
+    c.var.logger.error(err);
+    return c.json({ message: "Invalid token" }, STATUS_CODE.UNAUTHORIZED);
+  }
+}

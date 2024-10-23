@@ -22,8 +22,8 @@ export default function ProductList() {
     toast.error(error.message);
     return (
       <div className="text-center py-12">
-        <h2 className="text-xl font-semibold text-gray-900">Failed to load products</h2>
-        <p className="text-gray-600 mt-2">Please try again later</p>
+        <h2 className="text-xl font-semibold text-gray-900"> Sorry, Failed to load products.</h2>
+        <p className="text-gray-600 mt-2">Please try again later!</p>
       </div>
     );
   }
@@ -31,8 +31,8 @@ export default function ProductList() {
   if (!products?.length) {
     return (
       <div className="text-center py-12">
-        <h2 className="text-xl font-semibold text-gray-900">No products found</h2>
-        <p className="text-gray-600 mt-2">Check back later for new products</p>
+        <h2 className="text-xl font-semibold text-gray-900">No products found.</h2>
+        <p className="text-gray-600 mt-2">Check back later for new products.</p>
       </div>
     );
   }

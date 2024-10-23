@@ -1,9 +1,9 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { LoginSchema, RegisterSchema } from "@/schemas/auth-schema"
-
 import axios from "../axios/axios";
 import { API_URL } from "../index";
+import { IUser, SessionResponse } from "@/types";
 
 export const useLogin = () => {
     const queryClient = useQueryClient();
@@ -61,3 +61,30 @@ export const useRegister = () => {
             onError: (message: string) => toast.success(message),
         });
 }
+
+export const useUserSession = () => {
+    return useQuery({
+        queryKey: ['user', 'session'],
+        queryFn: () => {
+            return new Promise<IUser>((resolve, reject) => {
+                axios.get<SessionResponse>(API_URL.USER_SESSION)
+                    .then((response) => {
+                        if (response.data?.user) {
+                            resolve(response.data.user);
+                            console.log(response.data.user, "useUserSession")
+                        } else {
+                            reject(new Error(response.data.message || "User session not found"));
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Failed to fetch user session:", error);
+                        reject(new Error(error?.response?.data?.message || "Failed to fetch user session"));
+                    });
+            });
+        },
+        retry: 0,
+        refetchOnReconnect: false,
+        refetchOnWindowFocus: false,
+        staleTime: 5 * 60 * 1000,
+    });
+};
