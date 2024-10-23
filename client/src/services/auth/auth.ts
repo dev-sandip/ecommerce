@@ -18,6 +18,11 @@ export const useLogin = () => {
                                 queryKey: ["session"]
                             })
                             resolve(res.data?.message ?? "Welcome to Trendify");
+                            if (res.data.user.isAdmin) {
+                                window.location.href = "/dashboard"
+                            } else {
+                                window.location.href = "/"
+                            }
                         })
                         .catch((error) => {
                             reject(
@@ -46,7 +51,12 @@ export const useRegister = () => {
                             queryClient.invalidateQueries({
                                 queryKey: ["session"]
                             })
-                            resolve(res.data?.message ?? "Welcome to Trendify");
+                            resolve(res.data?.message ?? `Welcome to Trendify!`);
+                            if (res.data.user.isAdmin) {
+                                window.location.href = "/dashboard"
+                            } else {
+                                window.location.href = "/"
+                            }
                         })
                         .catch((error) => {
                             reject(

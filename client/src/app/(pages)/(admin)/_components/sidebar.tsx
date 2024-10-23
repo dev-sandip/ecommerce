@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { BarChart2, Package, Users, Settings, Menu } from 'lucide-react'
+import { BarChart2, Package, Users, Settings, Menu, Boxes } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import {
   Sheet,
@@ -13,8 +13,10 @@ import {
 const menuItems = [
   { icon: BarChart2, label: 'Home', href: '/dashboard' },
   { icon: Package, label: 'Products', href: '/dashboard/products' },
+  { icon: Boxes, label: 'Orders', href: '/dashboard/orders' },
   { icon: Users, label: 'Customers', href: '/dashboard/customers' },
   { icon: Settings, label: 'Settings', href: '/dashboard/settings' },
+
 ]
 
 export default function Sidebar() {
@@ -39,7 +41,7 @@ export default function Sidebar() {
             fill="white"
           />
         </svg>
-        <span className="ml-2 text-lg font-semibold">Admin Dashboard</span>
+        <span className="ml-2 text-lg font-semibold">Trendify Dashboard</span>
       </div>
       <nav className="flex-1 space-y-1 px-2 py-4">
         {menuItems.map((item) => {

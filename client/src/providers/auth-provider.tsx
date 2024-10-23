@@ -11,6 +11,7 @@ type Props = {
 };
 
 const AuthProvider = ({ children }: Props) => {
+  const isAdmin = useCustomStore((state) => state.isAdmin);
   const { data, isLoading, isError, isSuccess } = useUserSession();
   const setUser = useCustomStore((state: { setUser: (user: IUser) => void; }) => state.setUser);
   const setIsAdmin = useCustomStore((state: { setIsAdmin: (isAdmin: boolean) => void; }) => state.setIsAdmin);
@@ -25,10 +26,10 @@ const AuthProvider = ({ children }: Props) => {
     }
   }, [isError, isSuccess, data, setUser, setIsAdmin]);
 
-  const isAdmin = useCustomStore((state) => state.isAdmin);
   if (isLoading) {
     return <LoadingSpinner text="Authenticating Please Wait!" size="lg" className="h-screen w-screen" />;
   }
+
   if (isAdmin) {
     return <>{children}</>;
   } else {

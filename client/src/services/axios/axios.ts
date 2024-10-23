@@ -5,27 +5,27 @@ const axios = a.create({
     withCredentials: true,
 });
 
-axios.interceptors.request.use(
-    (config) => {
-        return config;
-    },
-    (error) => {
-        return Promise.reject(error);
-    }
-);
+// axios.interceptors.request.use(
+//     (config) => {
+//         return config;
+//     },
+//     (error) => {
+//         return Promise.reject(error);
+//     }
+// );
 
-axios.interceptors.response.use(
-    (response) => {
-        return response;
-    },
-    (error) => {
-        if (error.response?.status === 401) {
-            window.location.href = "/login";
-        }
+// axios.interceptors.response.use(
+//     (response) => {
+//         return response;
+//     },
+//     (error) => {
+//         if (error.response?.status === 401) {
+//             window.location.href = "/login";
+//         }
 
 
-        return Promise.reject(error);
-    }
-);
+//         return Promise.reject(error);
+//     }
+// );
 
 export default axios;
