@@ -19,7 +19,7 @@ connectDB();
 app.use(
   "*",
   cors({
-    origin: [env.FRONTEND_URL],
+    origin: [env.FRONTEND_URL, "https://ecommerce.sapkotasandip.com.np"],
     allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
     allowHeaders: ["Content-Type", "Authorization", "X-Custom-Header"],
