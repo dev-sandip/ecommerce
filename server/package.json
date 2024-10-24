@@ -1,6 +1,5 @@
 {
   "name": "server",
-  "type": "module",
   "version": "0.1.0",
   "scripts": {
     "dev": "tsx watch src/index.ts",
@@ -9,7 +8,8 @@
     "vercel:dev": "npm run build && vercel dev",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
-    "build": "tsc && tsc-alias"
+    "build": "tsc && tsc-alias",
+    "dev:sandip": "tsx watch ./api/index.ts"
   },
   "dependencies": {
     "@hono/node-server": "^1.13.2",
