@@ -8,7 +8,7 @@
     "typechecks": "tsc --noEmit",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
-    "build": "tsc "
+    "build": "tsc && tsc-alias"
   },
   "dependencies": {
     "@hono/node-server": "^1.13.2",
@@ -31,6 +31,8 @@
     "@types/node": "^20.11.17",
     "eslint": "^9.11.1",
     "eslint-plugin-format": "^0.1.2",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
     "tsx": "^4.7.1"
   }
 }

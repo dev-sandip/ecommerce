@@ -49,3 +49,4 @@ serve({
   fetch: app.fetch,
   port: env.PORT,
 });
+export default app;
