@@ -8,7 +8,7 @@
     "typechecks": "tsc --noEmit",
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
-    "build": "tsc && tsc-alias"
+    "build": "tsc "
   },
   "dependencies": {
     "@hono/node-server": "^1.13.2",
