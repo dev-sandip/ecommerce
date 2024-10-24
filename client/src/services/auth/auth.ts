@@ -81,7 +81,6 @@ export const useUserSession = () => {
                     .then((response) => {
                         if (response.data?.user) {
                             resolve(response.data.user);
-                            console.log(response.data.user, "useUserSession")
                         } else {
                             reject(new Error(response.data.message || "User session not found"));
                         }

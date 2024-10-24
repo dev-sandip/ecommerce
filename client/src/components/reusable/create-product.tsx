@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
@@ -8,21 +8,16 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Button } from '@/components/ui/button'
-import { Progress } from '@/components/ui/progress'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
 import { DollarSign, Tag, Star, Package, X } from 'lucide-react'
 import { productSchema } from '@/schemas/product-schema'
 import Image from 'next/image'
 import { useCreateProduct } from '@/services/products/product'
-import { Slider } from '@radix-ui/react-slider'
-
-
 
 type ProductFormData = z.infer<typeof productSchema>
 
 export default function ProductCreationForm() {
-  const [progress, setProgress] = useState(0)
   const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null)
   const [imagesPreview, setImagesPreview] = useState<Array<{ file: File; preview: string }>>([])
 
@@ -37,14 +32,8 @@ export default function ProductCreationForm() {
 
   const watchFields = watch()
 
-  useEffect(() => {
-    const filledFields = Object.values(watchFields).filter(Boolean).length
-    const totalFields = Object.keys(productSchema.shape).length
-    setProgress((filledFields / totalFields) * 100)
-  }, [watchFields])
-  const { mutate, isPending } = useCreateProduct()
-  const onSubmit = (data: ProductFormData,) => {
-
+  const { mutate, isPending, isSuccess } = useCreateProduct()
+  const onSubmit = (data: ProductFormData) => {
     const fd = new FormData()
     fd.append('title', data.title)
     fd.append('description', data.description)
@@ -59,8 +48,8 @@ export default function ProductCreationForm() {
       fd.append(`images[]`, image)
     })
     mutate(fd)
-
   }
+
 
   const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -88,14 +77,19 @@ export default function ProductCreationForm() {
     setImagesPreview(prev => prev.filter((_, i) => i !== index))
     setValue('images', watchFields.images.filter((_, i) => i !== index))
   }
+  if (isSuccess) {
+    reset()
+    setThumbnailPreview(null)
+    setImagesPreview([])
+  }
 
   return (
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader>
         <CardTitle className="text-2xl font-bold">Create New Product</CardTitle>
-        <Progress value={progress} className="w-full" />
       </CardHeader>
       <CardContent>
+
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-2">
             <Label htmlFor="title">Product Title</Label>
@@ -141,29 +135,17 @@ export default function ProductCreationForm() {
 
             <div className="space-y-2">
               <Label htmlFor="discountPercentage">Discount (%)</Label>
-              <div className="flex items-center space-x-2">
-                <Controller
-                  name="discountPercentage"
-                  control={control}
-                  render={({ field }) => (
-                    <Slider
-                      id="discountPercentage"
-                      max={100}
-                      step={1}
-                      className="flex-grow"
-                      onValueChange={(value) => field.onChange(value[0])}
-                      value={[field.value]}
-                    />
-                    // <Input
-                    //   id="discountPercentage"
-                    //   type="number"
-                    //   {...field}
-                    //   placeholder="0"
-                    // className={`flex-grow ${errors.discountPercentage ? 'border-red-500' : ''}`}
-                    // />
-                  )}
-                />
-              </div>
+              <Input
+                id="discountPercentage"
+                type="number"
+                min="0"
+                max="100"
+                step="1"
+                {...register('discountPercentage', { valueAsNumber: true })}
+                placeholder="0"
+                className={errors.discountPercentage ? 'border-red-500' : ''}
+              />
+              {errors.discountPercentage && <p className="text-red-500 text-sm">{errors.discountPercentage.message}</p>}
             </div>
           </div>
 
@@ -287,6 +269,7 @@ export default function ProductCreationForm() {
             </div>
             {errors.images && <p className="text-red-500 text-sm">{errors.images.message}</p>}
           </div>
+
         </form>
       </CardContent>
       <CardFooter className="flex justify-between">
