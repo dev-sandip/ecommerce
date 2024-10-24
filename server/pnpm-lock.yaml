@@ -14,6 +14,9 @@ importers:
       '@hono/zod-validator':
         specifier: ^0.4.1
         version: 0.4.1(hono@4.6.6)(zod@3.23.8)
+      '@types/node':
+        specifier: ^22.7.9
+        version: 22.7.9
       bcrypt:
         specifier: ^5.1.1
         version: 5.1.1
@@ -62,7 +65,7 @@ importers:
         version: 0.1.2(eslint@9.13.0)
       ts-node:
         specifier: ^10.9.2
-        version: 10.9.2(@types/node@20.17.0)(typescript@5.6.3)
+        version: 10.9.2(@types/node@22.7.9)(typescript@5.6.3)
       tsconfig-paths:
         specifier: ^4.2.0
         version: 4.2.0
@@ -475,8 +478,8 @@ packages:
   '@types/ms@0.7.34':
     resolution: {integrity: sha512-nG96G3Wp6acyAgJqGasjODb+acrI7KltPiRxzHPXnP3NgI28bpQDRv53olbqGXbfcgF5aiiHmO3xpwEpS5Ld9g==}
 
-  '@types/node@20.17.0':
-    resolution: {integrity: sha512-a7zRo0f0eLo9K5X9Wp5cAqTUNGzuFLDG2R7C4HY2BhcMAsxgSPuRvAC1ZB6QkuUQXf0YZAgfOX2ZyrBa2n4nHQ==}
+  '@types/node@22.7.9':
+    resolution: {integrity: sha512-jrTfRC7FM6nChvU7X2KqcrgquofrWLFDeYC1hKfwNWomVvrn7JIksqf344WN2X/y8xrgqBd2dJATZV4GbatBfg==}
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
@@ -2520,7 +2523,7 @@ snapshots:
 
   '@types/bcrypt@5.0.2':
     dependencies:
-      '@types/node': 20.17.0
+      '@types/node': 22.7.9
 
   '@types/debug@4.1.12':
     dependencies:
@@ -2530,7 +2533,7 @@ snapshots:
 
   '@types/imagekit@3.1.5':
     dependencies:
-      '@types/node': 20.17.0
+      '@types/node': 22.7.9
 
   '@types/json-schema@7.0.15': {}
 
@@ -2540,7 +2543,7 @@ snapshots:
 
   '@types/ms@0.7.34': {}
 
-  '@types/node@20.17.0':
+  '@types/node@22.7.9':
     dependencies:
       undici-types: 6.19.8
 
@@ -4288,14 +4291,14 @@ snapshots:
     dependencies:
       typescript: 5.6.3
 
-  ts-node@10.9.2(@types/node@20.17.0)(typescript@5.6.3):
+  ts-node@10.9.2(@types/node@22.7.9)(typescript@5.6.3):
     dependencies:
       '@cspotcode/source-map-support': 0.8.1
       '@tsconfig/node10': 1.0.11
       '@tsconfig/node12': 1.0.11
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
-      '@types/node': 20.17.0
+      '@types/node': 22.7.9
       acorn: 8.13.0
       acorn-walk: 8.3.4
       arg: 4.1.3
