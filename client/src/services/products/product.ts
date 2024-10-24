@@ -1,7 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "../axios/axios";
 import { API_URL } from "../index";
-import { ProductType } from "@/schemas/product-schema";
 import { toast } from "sonner";
 
 
@@ -43,7 +42,7 @@ export const useGetSingleProduct = (id: string) => {
 export const useCreateProduct = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (data: ProductType): Promise<string> => {
+    mutationFn: (data: FormData): Promise<string> => {
       return new Promise((resolve, reject) => {
         axios.post(API_URL.CREATE_PRODUCT, data)
           .then((res) => {

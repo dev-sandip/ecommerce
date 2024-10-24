@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
-import { Slider } from '@/components/ui/slider'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
@@ -16,6 +15,7 @@ import { DollarSign, Tag, Star, Package, X } from 'lucide-react'
 import { productSchema } from '@/schemas/product-schema'
 import Image from 'next/image'
 import { useCreateProduct } from '@/services/products/product'
+import { Slider } from '@radix-ui/react-slider'
 
 
 
@@ -42,10 +42,24 @@ export default function ProductCreationForm() {
     const totalFields = Object.keys(productSchema.shape).length
     setProgress((filledFields / totalFields) * 100)
   }, [watchFields])
-  const { mutate } = useCreateProduct()
-  const onSubmit = (data: ProductFormData) => {
-    mutate(data)
-    // Here you would typically send the data to your API
+  const { mutate, isPending } = useCreateProduct()
+  const onSubmit = (data: ProductFormData,) => {
+
+    const fd = new FormData()
+    fd.append('title', data.title)
+    fd.append('description', data.description)
+    fd.append('price', data.price.toString())
+    fd.append('discountPercentage', data.discountPercentage.toString())
+    fd.append('rating', data.rating.toString())
+    fd.append('stock', data.stock.toString())
+    fd.append('brand', data.brand)
+    fd.append('category', data.category)
+    fd.append('thumbnail', data.thumbnail)
+    data.images.forEach((image) => {
+      fd.append(`images[]`, image)
+    })
+    mutate(fd)
+
   }
 
   const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -140,9 +154,15 @@ export default function ProductCreationForm() {
                       onValueChange={(value) => field.onChange(value[0])}
                       value={[field.value]}
                     />
+                    // <Input
+                    //   id="discountPercentage"
+                    //   type="number"
+                    //   {...field}
+                    //   placeholder="0"
+                    // className={`flex-grow ${errors.discountPercentage ? 'border-red-500' : ''}`}
+                    // />
                   )}
                 />
-                <span className="w-12 text-center">{watchFields.discountPercentage}%</span>
               </div>
             </div>
           </div>
@@ -271,7 +291,7 @@ export default function ProductCreationForm() {
       </CardContent>
       <CardFooter className="flex justify-between">
         <Button variant="outline" onClick={() => reset()}>Reset</Button>
-        <Button type="submit" onClick={handleSubmit(onSubmit)}>Submit</Button>
+        {isPending ? <Button variant="default" disabled>Creating...</Button> : <Button variant="default" onClick={handleSubmit(onSubmit)}>Create Product</Button>}
       </CardFooter>
     </Card>
   )

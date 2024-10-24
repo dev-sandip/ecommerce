@@ -1,14 +1,24 @@
-import { ShoppingCart, Search, Menu } from 'lucide-react'
+'use client'
+
+import { useState } from 'react'
+import { ShoppingCart, Search, Menu, X } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import Image from 'next/image';
+import Image from 'next/image'
+import Link from 'next/link'
+import useCustomStore from '@/store'
 
 interface HeaderProps {
-    toggleCart: () => void;
-    cartItemsCount: number;
+    toggleCart: () => void
+    cartItemsCount: number
 }
 
 export default function Header({ toggleCart, cartItemsCount }: HeaderProps) {
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+    const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
+    const user = useCustomStore((state) => state.user);
+    const isAdmin = useCustomStore((state) => state.isAdmin);
     return (
         <header className="bg-white shadow-md sticky top-0 z-50">
             <div className="container mx-auto px-4 py-4">
@@ -17,9 +27,9 @@ export default function Header({ toggleCart, cartItemsCount }: HeaderProps) {
                         <Image src="/logo.svg" alt="Store Logo" width={152} height={56} className="h-8 w-auto mr-4" />
                         <nav className="hidden md:block">
                             <ul className="flex space-x-4">
-                                <li><a href="#" className="text-gray-600 hover:text-gray-900">Home</a></li>
-                                <li><a href="#" className="text-gray-600 hover:text-gray-900">Products</a></li>
-                                <li><a href="#" className="text-gray-600 hover:text-gray-900">Categories</a></li>
+                                <li><Link href="/" className="text-gray-600 hover:text-gray-900">Home</Link></li>
+                                <li><Link href="/products" className="text-gray-600 hover:text-gray-900">Products</Link></li>
+                                <li><Link href="/categories" className="text-gray-600 hover:text-gray-900">Categories</Link></li>
                             </ul>
                         </nav>
                     </div>
@@ -36,11 +46,59 @@ export default function Header({ toggleCart, cartItemsCount }: HeaderProps) {
                                 </span>
                             )}
                         </Button>
-                        <Button variant="ghost" size="icon" className="md:hidden">
-                            <Menu size={24} />
+                        <div className="hidden md:flex space-x-2">
+                            {user ? (
+                                <Link href={isAdmin ? "/dashboard" : "/profile"} passHref>
+                                    <Button variant="outline" className="text-gray-600 hover:text-gray-900">Dashboard</Button>
+                                </Link>
+                            ) : (
+                                <>
+                                    <Link href="/login" passHref>
+                                        <Button variant="outline" className="text-gray-600 hover:text-gray-900">Login</Button>
+                                    </Link>
+                                    <Link href="/register" passHref>
+                                        <Button className="text-gray-600 hover:text-gray-900">Sign Up</Button>
+                                    </Link>
+                                </>
+                            )}
+                        </div>
+                        <Button variant="ghost" size="icon" className="md:hidden" onClick={toggleMenu}>
+                            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
                         </Button>
                     </div>
                 </div>
+                {isMenuOpen && (
+                    <div className="md:hidden mt-4">
+                        <nav>
+                            <ul className="flex flex-col space-y-2">
+                                <li><Link href="/" className="block py-2 text-gray-600 hover:text-gray-900">Home</Link></li>
+                                <li><Link href="/products" className="block py-2 text-gray-600 hover:text-gray-900">Products</Link></li>
+                                <li><Link href="/categories" className="block py-2 text-gray-600 hover:text-gray-900">Categories</Link></li>
+                            </ul>
+                        </nav>
+                        <div className="mt-4 flex flex-col space-y-2">
+                            {user ? (
+                                <Link href={isAdmin ? "/dashboard" : "/profile"} passHref>
+                                    <Button variant="outline" className="text-gray-600 hover:text-gray-900">Dashboard</Button>
+                                </Link>
+                            ) : (
+                                <>
+                                    <Link href="/login" passHref>
+                                        <Button variant="outline" className="text-gray-600 hover:text-gray-900">Login</Button>
+                                    </Link>
+                                    <Link href="/register" passHref>
+                                        <Button className="text-gray-600 hover:text-gray-900">Sign Up</Button>
+                                    </Link>
+                                </>
+                            )}
+
+                        </div>
+                        <div className="mt-4 relative">
+                            <Input type="search" placeholder="Search..." className="w-full pl-10" />
+                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                        </div>
+                    </div>
+                )}
             </div>
         </header>
     )
