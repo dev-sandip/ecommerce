@@ -8,10 +8,13 @@ import { ProductImages } from '../_components/productImages';
 import { LoadingSkeleton } from '../_components/LoadingSkeleton';
 import { ProductDetails } from '../_components/ProductDetails';
 import { Product } from '@/schemas/product-schema';
+interface ProductWithID extends Product {
+  _id: string;
+}
 export default function ProductPage() {
   const { id } = useParams();
   const { data, error, isLoading } = useGetSingleProduct(id as string);
-  const product: Product = data as Product;
+  const product: ProductWithID = data as ProductWithID;
   if (isLoading) {
     return <LoadingSkeleton />;
   }

@@ -4,13 +4,13 @@ Welcome to the Trendify repository! This project is an e-commerce platform where
 
 ## Table of Contents 📚
 
-- [Features](#features)
-- [Technologies](#technologies)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Scripts](#scripts)
-- [Contributing](#contributing)
-- [License](#license)
+- [Features](#features-)
+- [Technologies](#technologies-️)
+- [Installation](#installation-️)
+- [Usage](#usage-)
+- [Scripts](#scripts-)
+- [Contributing](#contributing-)
+- [License](#license-)
 
 ## Features ✨
 
