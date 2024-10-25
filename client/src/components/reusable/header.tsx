@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import Link from 'next/link'
-import useCustomStore from '@/store'
+import useAuthStore from '@/store/auth'
 
 interface HeaderProps {
     toggleCart: () => void
@@ -17,8 +17,8 @@ export default function Header({ toggleCart, cartItemsCount }: HeaderProps) {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
-    const user = useCustomStore((state) => state.user);
-    const isAdmin = useCustomStore((state) => state.isAdmin);
+    const user = useAuthStore((state) => state.user);
+    const isAdmin = useAuthStore((state) => state.isAdmin);
     return (
         <header className="bg-white shadow-md sticky top-0 z-50">
             <div className="container mx-auto px-4 py-4">
@@ -57,7 +57,7 @@ export default function Header({ toggleCart, cartItemsCount }: HeaderProps) {
                                         <Button variant="outline" className="text-gray-600 hover:text-gray-900">Login</Button>
                                     </Link>
                                     <Link href="/register" passHref>
-                                        <Button className="text-gray-600 hover:text-gray-900">Sign Up</Button>
+                                        <Button className="text-white hover:text-gray-900">Sign Up</Button>
                                     </Link>
                                 </>
                             )}
@@ -87,7 +87,7 @@ export default function Header({ toggleCart, cartItemsCount }: HeaderProps) {
                                         <Button variant="outline" className="text-gray-600 hover:text-gray-900">Login</Button>
                                     </Link>
                                     <Link href="/register" passHref>
-                                        <Button className="text-gray-600 hover:text-gray-900">Sign Up</Button>
+                                        <Button className="text-white hover:text-gray-900">Sign Up</Button>
                                     </Link>
                                 </>
                             )}

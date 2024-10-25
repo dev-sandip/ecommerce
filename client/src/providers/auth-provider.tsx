@@ -1,7 +1,7 @@
 "use client";
 import LoadingSpinner from "@/components/reusable/Loading";
 import { useUserSession } from "@/services/auth/auth";
-import useCustomStore from "@/store";
+import useCustomStore from "@/store/auth";
 import { IUser } from "@/types";
 import React, { useEffect } from "react";
 

@@ -5,29 +5,34 @@ import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import { Product } from '@/schemas/product-schema';
 import { StarRating } from './StarRating';
+import { useCartStore } from '@/store/cart';
+import { IProduct } from '@/types';
 
+interface ProductWithID extends Product {
+  _id: string;
+}
 interface ProductDetailsProps {
-  product: Product;
+  product: ProductWithID;
 }
 
 export const ProductDetails = ({ product }: ProductDetailsProps) => {
-  const discountedPrice = useMemo(() => 
+  const discountedPrice = useMemo(() =>
     product.price * (1 - product.discountPercentage / 100),
     [product.price, product.discountPercentage]
   );
 
-  const maxQuantity = useMemo(() => 
+  const maxQuantity = useMemo(() =>
     Math.min(10, product.stock),
     [product.stock]
   );
 
   const [quantity, setQuantity] = useState(1);
-
+  const addItem = useCartStore((state: { addItem: (item: IProduct, quantity: number) => void }) => state.addItem);
   const handleAddToCart = () => {
-    toast.success(`Added ${quantity} ${quantity === 1 ? 'item' : 'items'} to cart`);
-    // Add your cart logic here
+    addItem(product as IProduct, quantity);
+    toast.success(`Added ${quantity} ${quantity === 1 ? 'item' : 'items'} of ${product.title} to cart`);
   };
-
+  console.log("Item from store", useCartStore.getState().items)
   const handleWishlist = () => {
     toast.success('Added to wishlist');
     // Add your wishlist logic here
@@ -39,9 +44,9 @@ export const ProductDetails = ({ product }: ProductDetailsProps) => {
         <h1 className="text-3xl font-bold">{product.title}</h1>
         <p className="text-lg text-gray-600">{product.brand}</p>
       </div>
-      
+
       <StarRating rating={product.rating} />
-      
+
       <div>
         <p className="text-3xl font-bold">${discountedPrice.toFixed(2)}</p>
         {product.discountPercentage > 0 && (
@@ -53,9 +58,9 @@ export const ProductDetails = ({ product }: ProductDetailsProps) => {
           </p>
         )}
       </div>
-      
+
       <p className="text-gray-700">{product.description}</p>
-      
+
       <div className="space-y-2">
         <p className="font-semibold">
           Category: <span className="font-normal">{product.category}</span>
@@ -67,7 +72,7 @@ export const ProductDetails = ({ product }: ProductDetailsProps) => {
           </span>
         </p>
       </div>
-      
+
       {product.stock > 0 && (
         <div className="flex items-center space-x-4">
           <select

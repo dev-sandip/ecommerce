@@ -21,7 +21,7 @@ const persistConfig: StorePersist = {
   storage: createJSONStorage(() => sessionStorage),
 };
 
-const useCustomStore = create<Store>()(
+const useAuthStore = create<Store>()(
   persist(
     (set) => ({
       user: null,
@@ -32,5 +32,4 @@ const useCustomStore = create<Store>()(
     persistConfig
   )
 );
-
-export default useCustomStore;
+export default useAuthStore;
