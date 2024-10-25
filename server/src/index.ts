@@ -16,12 +16,21 @@ const app = new Hono().basePath("/api/v1");
 // Connect MongoDB
 connectDB();
 
-app.use("*", cors({
-  origin: [env.FRONTEND_URL, "https://ecommerce.sapkotasandip.com.np"],
-  allowHeaders: ["Origin", "Content-Type", "Authorization"],
-  allowMethods: ["GET", "OPTIONS", "POST", "PUT", "DELETE"],
-  credentials: true,
-}));
+// app.use("*", cors({
+//   origin: [env.FRONTEND_URL, "https://ecommerce.sapkotasandip.com.np"],
+//   allowHeaders: ["Origin", "Content-Type", "Authorization"],
+//   allowMethods: ["GET", "OPTIONS", "POST", "PUT", "DELETE"],
+//   credentials: true,
+// }));
+app.use((c, next) => {
+  const handler = cors({
+    origin: env.FRONTEND_URL,
+    credentials: true,
+    allowHeaders: ["Origin", "Content-Type", "Authorization"],
+    allowMethods: ["GET", "OPTIONS", "POST", "PUT", "DELETE"],
+  });
+  return handler(c, next);
+});
 app.use("*", logger(), prettyJSON());
 
 // Home Route
