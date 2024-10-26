@@ -24,7 +24,9 @@ export default function Header({ toggleCart, cartItemsCount }: HeaderProps) {
             <div className="container mx-auto px-4 py-4">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center">
-                        <Image src="/logo.svg" alt="Store Logo" width={152} height={56} className="h-8 w-auto mr-4" />
+                        <Link href="/" passHref>
+                            <Image src="/logo.svg" alt="Store Logo" width={152} height={56} className="h-8 w-auto mr-4" />
+                        </Link>
                         <nav className="hidden md:block">
                             <ul className="flex space-x-4">
                                 <li><Link href="/" className="text-gray-600 hover:text-gray-900">Home</Link></li>

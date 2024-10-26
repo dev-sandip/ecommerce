@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, Plus, Minus, ShoppingCart } from 'lucide-react';
+import { X, Plus, Minus, ShoppingCart, BaggageClaim } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Sheet,
@@ -12,6 +12,7 @@ import { useCartStore } from '@/store/cart';
 import { toast } from 'sonner';
 import Image from 'next/image';
 import { ScrollArea } from '../ui/scroll-area';
+import Link from 'next/link';
 interface CartProps {
   isOpen: boolean;
   toggleCart: () => void;
@@ -134,9 +135,14 @@ const Cart = ({ isOpen, toggleCart }: CartProps) => {
                     {formatPrice(totalAmount)}
                   </span>
                 </div>
-                <Button className="w-full">
-                  Checkout
-                </Button>
+                <Link href="/checkout" passHref>
+                  <Button className="w-full">
+
+
+                    <BaggageClaim className="w-4 h-4 mr-2" />
+                    Checkout
+                  </Button>
+                </Link>
               </div>
             </SheetFooter>
           </>
