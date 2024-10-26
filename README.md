@@ -137,6 +137,4 @@ We welcome contributions! If you'd like to contribute, please fork the repositor
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
----
 
-Feel free to customize this README further based on your specific project needs! 🎉
