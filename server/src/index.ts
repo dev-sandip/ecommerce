@@ -7,7 +7,8 @@ import { prettyJSON } from "hono/pretty-json";
 import connectDB from "./config/db";
 import env from "./env";
 import { errorHandler, notFound } from "./middlewares/error-middleware";
-import productAuth from "./routes/product.routes";
+import orderRoute from "./routes/order.routes";
+import productRoute from "./routes/product.routes";
 import userAuth from "./routes/user.routes";
 
 // Initialize the Hono app with base path
@@ -22,24 +23,14 @@ app.use("*", cors({
   allowMethods: ["GET", "OPTIONS", "POST", "PUT", "DELETE"],
   credentials: true,
 }));
-// app.use((c, next) => {
-//   const handler = cors({
-//     origin: env.FRONTEND_URL,
-//     credentials: true,
-//     allowHeaders: ["Origin", "Content-Type", "Authorization"],
-//     allowMethods: ["GET", "OPTIONS", "POST", "PUT", "DELETE"],
-//   });
-//   return handler(c, next);
-// });
+
 app.use("*", logger(), prettyJSON());
 
 // Home Route
 app.get("/", c => c.text("Welcome to the API!"));
 
-// Authentication routes
-app.route("/auth", userAuth);
-// Product routes
-app.route("/products", productAuth);
+// Routes
+app.route("/auth", userAuth).route("/products", productRoute).route("/orders", orderRoute);
 
 // Error handling middleware
 app.onError((_err, c) => errorHandler(c));

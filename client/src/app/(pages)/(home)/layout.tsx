@@ -1,25 +1,48 @@
 "use client"
+import Cart from '@/components/reusable/cart';
 import Footer from '@/components/reusable/footer';
 import Header from '@/components/reusable/header';
-import React, { useState } from 'react'
-
-
+import { useCartStore } from '@/store/cart';
+import React, { useState, useEffect } from 'react';
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [isCartOpen, setIsCartOpen] = useState(false)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [cart, setCart] = useState([])
+  const { totalItems } = useCartStore();
 
-  const toggleCart = () => setIsCartOpen(!isCartOpen)
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
+
+  const toggleCart = () => {
+    setIsCartOpen(!isCartOpen);
+  };
+
+  if (!isHydrated) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header toggleCart={toggleCart} cartItemsCount={0} />
+        {children}
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
-      <Header toggleCart={toggleCart} cartItemsCount={cart.length} />
+      <Header toggleCart={toggleCart} cartItemsCount={totalItems} />
       {children}
+      <Cart
+        isOpen={isCartOpen}
+        toggleCart={toggleCart}
+      />
       <Footer />
     </div>
-  )
+  );
 }

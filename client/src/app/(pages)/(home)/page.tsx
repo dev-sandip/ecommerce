@@ -6,6 +6,8 @@ import ProductList from "@/components/reusable/product-list"
 
 const LandingPage = () => {
 
+
+
     return (
         <div>
 
@@ -18,13 +20,7 @@ const LandingPage = () => {
                 </div>
                 <CTASection />
             </main>
-            {/* <Cart
-                isOpen={isCartOpen}
-                toggleCart={toggleCart}
-                cart={cart}
-                removeFromCart={removeFromCart}
-                updateQuantity={updateQuantity}
-            /> */}
+
 
         </div>
     )
