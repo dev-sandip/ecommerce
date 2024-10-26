@@ -48,10 +48,10 @@ export const ProductDetails = ({ product }: ProductDetailsProps) => {
       <StarRating rating={product.rating} />
 
       <div>
-        <p className="text-3xl font-bold">${discountedPrice.toFixed(2)}</p>
+        <p className="text-3xl font-bold">Rs.{discountedPrice.toFixed(2)}</p>
         {product.discountPercentage > 0 && (
           <p className="text-lg text-gray-600">
-            <span className="line-through">${product.price.toFixed(2)}</span>{' '}
+            <span className="line-through">Rs {product.price.toFixed(2)}</span>{' '}
             <Badge variant="destructive">
               {product.discountPercentage}% OFF
             </Badge>

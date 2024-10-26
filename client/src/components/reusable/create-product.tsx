@@ -209,11 +209,11 @@ export default function ProductCreationForm() {
                         <SelectValue placeholder="Select category" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="electronics">Electronics</SelectItem>
-                        <SelectItem value="apparel">Apparel</SelectItem>
-                        <SelectItem value="home">Home & Garden</SelectItem>
-                        <SelectItem value="beauty">Beauty & Personal Care</SelectItem>
-                        <SelectItem value="sports">Sports & Outdoors</SelectItem>
+                        <SelectItem value="Electronics">Electronics</SelectItem>
+                        <SelectItem value="Apparel">Apparel</SelectItem>
+                        <SelectItem value="Home">Home & Garden</SelectItem>
+                        <SelectItem value="Beauty">Beauty & Personal Care</SelectItem>
+                        <SelectItem value="Sports">Sports & Outdoors</SelectItem>
                       </SelectContent>
                     </Select>
                   )}

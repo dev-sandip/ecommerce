@@ -86,7 +86,7 @@ export default function AnalyticsPage() {
                                         fontSize={12}
                                         tickLine={false}
                                         axisLine={false}
-                                        tickFormatter={(value) => `$${value}`}
+                                        tickFormatter={(value) => `Rs.${value}`}
                                     />
                                     <ChartTooltip content={<ChartTooltipContent />} />
                                     <Bar dataKey="total" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
