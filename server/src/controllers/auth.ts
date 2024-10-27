@@ -1,7 +1,7 @@
 import type { Context } from "hono";
 
 import { compare, hash } from "bcrypt";
-import { getCookie, setCookie } from "hono/cookie";
+import { deleteCookie, getCookie, setCookie } from "hono/cookie";
 import { Jwt } from "hono/utils/jwt";
 import { z } from "zod";
 
@@ -135,10 +135,7 @@ export async function loginUser(c: Context) {
 };
 export async function logoutUser(c: Context) {
   try {
-    setCookie(c, COOKIE.AUTH, "", {
-      path: "/",
-      maxAge: -1,
-    });
+    deleteCookie(c, COOKIE.AUTH);
     return c.json(
       {
         message: "Logged out successfully",

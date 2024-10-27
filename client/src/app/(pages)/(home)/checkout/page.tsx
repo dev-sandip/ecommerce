@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/dialog"
 import { AddressFormData, AddressSchema } from '@/schemas/address-schema'
 import { useCartStore } from '@/store/cart'
+import { discountAmount } from '@/lib/utils'
 
 export default function CheckoutPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -41,6 +42,7 @@ export default function CheckoutPage() {
     setSelectedAddress(addresses.length)
     reset()
     setIsAddressDialogOpen(false)
+    console.log('Address added:', data)
   }
 
   const placeOrder = async () => {
@@ -53,7 +55,7 @@ export default function CheckoutPage() {
     setSubmitError(null)
     try {
       // Here you would typically send the order data to your API
-      console.log('Submitting order:', { items, shippingAddress: addresses[selectedAddress] })
+      console.log('Submitting order:', { items, shippingAddress: addresses[selectedAddress], totalAmount })
       // Simulating API call
       await new Promise((resolve) => setTimeout(resolve, 2000))
       alert('Order placed successfully!')
@@ -82,8 +84,10 @@ export default function CheckoutPage() {
                   <div>
                     <p className="font-semibold">{item.title}</p>
                     <p className="text-sm text-gray-500">Quantity: {item.quantity}</p>
+                    <p className="text-sm text-gray-500">Discount: {item.discountPercentage} %</p>
                   </div>
                   <p>Rs {item.price}</p>
+                  <p> -Rs{discountAmount(item.price, item.discountPercentage)}</p>
                 </div>
               ))
             ) : (

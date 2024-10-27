@@ -1,3 +1,4 @@
+import { priceAfterDiscount } from '@/lib/utils';
 import { IProduct } from '@/types';
 import { create } from 'zustand';
 import { persist, createJSONStorage, PersistOptions } from 'zustand/middleware';
@@ -48,14 +49,14 @@ export const useCartStore = create<CartStore>()(
           set(state => ({
             items: updatedItems,
             totalItems: state.totalItems + quantity,
-            totalAmount: state.totalAmount + (product.price * quantity)
+            totalAmount: state.totalAmount + (priceAfterDiscount(product.price, product.discountPercentage) * quantity)
           }));
         } else {
           const newItem = { ...product, quantity };
           set(state => ({
             items: [...state.items, newItem],
             totalItems: state.totalItems + quantity,
-            totalAmount: state.totalAmount + (product.price * quantity)
+            totalAmount: state.totalAmount + (priceAfterDiscount(product.price, product.discountPercentage) * quantity)
           }));
         }
       },

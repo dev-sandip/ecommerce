@@ -18,7 +18,7 @@
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
     "dotenv-expand": "^11.0.6",
-    "hono": "^4.6.4",
+    "hono": "^4.6.7",
     "imagekit": "^5.2.0",
     "mongoose": "^8.7.1",
     "pino": "^9.5.0",

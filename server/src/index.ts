@@ -7,6 +7,7 @@ import { prettyJSON } from "hono/pretty-json";
 import connectDB from "./config/db";
 import env from "./env";
 import { errorHandler, notFound } from "./middlewares/error-middleware";
+import addressRoute from "./routes/address.routes";
 import orderRoute from "./routes/order.routes";
 import productRoute from "./routes/product.routes";
 import userAuth from "./routes/user.routes";
@@ -30,7 +31,7 @@ app.use("*", logger(), prettyJSON());
 app.get("/", c => c.text("Welcome to the API!"));
 
 // Routes
-app.route("/auth", userAuth).route("/products", productRoute).route("/orders", orderRoute);
+app.route("/auth", userAuth).route("/products", productRoute).route("/orders", orderRoute).route("/address/", addressRoute);
 
 // Error handling middleware
 app.onError((_err, c) => errorHandler(c));

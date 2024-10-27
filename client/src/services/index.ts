@@ -14,4 +14,5 @@ export const API_URL = {
     PRODUCTS: "/products",
     USER_SESSION: "/auth/me",
     CREATE_PRODUCT: "/products/create",
+    CREATE_ORDER: "/orders/create",
 };

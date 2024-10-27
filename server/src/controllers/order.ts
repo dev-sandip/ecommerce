@@ -10,9 +10,18 @@ import { OrderSchema } from "@/schema/order";
 
 export async function createOrder(c: Context) {
   try {
-    const data: IOrder = await c.req.json();
-    const body = OrderSchema.parse(data);
-    const newOrder = await orderModel.create(body);
+    const userId = c.get("user")._id.toString();
+    if (!userId) {
+      return c.json(
+        {
+          message: "User not found",
+        },
+        STATUS_CODE.NOT_FOUND,
+      );
+    }
+    const data = await c.req.json();
+    const body: IOrder = OrderSchema.parse(data);
+    const newOrder = await orderModel.create({ ...body, user: userId });
     return c.json(
       {
         message: "Order placed successfully",
@@ -94,7 +103,7 @@ export async function getOrderById(c: Context) {
 }
 export async function getUserOrders(c: Context) {
   try {
-    const userId = c.req.param("userId");
+    const userId = c.get("user")._id;
     const orders = await orderModel.find({ user: userId }).populate("product").populate("user");
     return c.json(
       {

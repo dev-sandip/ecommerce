@@ -8,6 +8,7 @@ export const AddressSchema = z.object({
   state: z.string().min(2, 'State must be at least 2 characters'),
   zipCode: z.string().regex(/^\d{5}(-\d{4})?$/, 'Invalid ZIP code'),
   country: z.string().min(2, 'Country must be at least 2 characters'),
+  userId: z.string(),
 })
 
 export type AddressFormData = z.infer<typeof AddressSchema>
