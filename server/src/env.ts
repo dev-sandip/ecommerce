@@ -21,6 +21,8 @@ const EnvSchema = z.object({
   IMAGE_KIT_PUBLIC_KEY: z.string().optional(),
   IMAGE_KIT_PRIVATE_KEY: z.string().optional(),
   IMAGE_KIT_ENDPOINT: z.string().url().optional(),
+  KHALTI_LIVE_SECRET_KEY: z.string().optional(),
+  KHALTI_LIVE_PUBLIC_KEY: z.string().optional(),
 }).superRefine((input, ctx) => {
   if (input.NODE_ENV === "production" && !input.DATABASE_AUTH_TOKEN) {
     ctx.addIssue({
