@@ -39,7 +39,13 @@ export default function ProductPage() {
     return (
       <div className="text-center py-12">
         <h2 className="text-xl font-semibold text-gray-900">No products found.</h2>
-        <p className="text-gray-600 mt-2">Check back later for new products.</p>
+        <p className="text-gray-600 mt-2">Upload an product on clicking following button!.</p>
+        <Link href="/dashboard/create" passHref>
+          <Button className="ml-4 mt-3">
+            <Plus className="w-4 h-4 mr-2" />
+            New Product
+          </Button>
+        </Link>
       </div>
     );
   }
