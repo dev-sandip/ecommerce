@@ -24,6 +24,7 @@ connectDB();
 //   allowMethods: ["GET", "OPTIONS", "POST", "PUT", "DELETE"],
 //   credentials: true,
 // }));
+console.log("Allowed CORS Origin:", env.FRONTEND_URL);
 app.use(
   cors({
     origin: (origin) => {
