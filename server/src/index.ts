@@ -18,12 +18,26 @@ const app = new Hono().basePath("/api/v1");
 // Connect MongoDB
 connectDB();
 
-app.use("*", cors({
-  origin: env.FRONTEND_URL,
-  allowHeaders: ["Origin", "Content-Type", "Authorization"],
-  allowMethods: ["GET", "OPTIONS", "POST", "PUT", "DELETE"],
-  credentials: true,
-}));
+// app.use("*", cors({
+//   origin: env.FRONTEND_URL,
+//   allowHeaders: ["Origin", "Content-Type", "Authorization"],
+//   allowMethods: ["GET", "OPTIONS", "POST", "PUT", "DELETE"],
+//   credentials: true,
+// }));
+app.use(
+  cors({
+    origin: (origin) => {
+      if (!origin)
+        return env.FRONTEND_URL; // Allow server-to-server requests
+      if (origin === env.FRONTEND_URL)
+        return origin;
+      return null; // Block other origins
+    },
+    allowHeaders: ["Origin", "Content-Type", "Authorization"],
+    allowMethods: ["GET", "OPTIONS", "POST", "PUT", "DELETE"],
+    credentials: true,
+  }),
+);
 
 app.use("*", logger(), prettyJSON());
 
